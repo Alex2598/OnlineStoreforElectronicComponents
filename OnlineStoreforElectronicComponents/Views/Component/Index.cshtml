@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Component>
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Components</h2>
+
+<a asp-action="AddComponent" asp-controller="Component" class="btn btn-primary">Add More</a>
+
+@if(Model?.Count()>0)
+{
+    <table class="table table-striped my-2">
+        <tr>
+            <th>Image</th>
+            <th>Component</th>
+            <th>Package</th>
+            <th>TypeOfComponent</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var component in Model)
+        {
+            <tr>
+                <td>
+                    @if(string.IsNullOrWhiteSpace(component.Image))
+                    {
+                        <img src="/Images/NoImage.png" style="width:80px;height:100px" alt="component image" />
+                    }
+                    else
+                    {
+                        <img src="/images/@component.Image" style="width:80px;height:100px" alt="component image" />
+                    }
+                </td>
+                <td>@component.ComponentName</td>
+                <td>@component.Package</td>
+                <td>@component.TypeOfComponent.TypeOfComponentName</td>
+                <td>@component.Price</td>
+                <td>
+                    <a asp-action="UpdateComponent" asp-controller="Component" asp-route-id="@component.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="DeleteComponent" asp-controller="Component" asp-route-id="@component.Id" class="btn btn-danger" onclick="return window.confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>No records</h3>
+}
+

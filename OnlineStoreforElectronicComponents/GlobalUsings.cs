@@ -1,0 +1,5 @@
+﻿global using OnlineStoreforElectronicComponents.Data;
+global using OnlineStoreforElectronicComponents.Models;
+global using OnlineStoreforElectronicComponents.Models.DTOs;
+global using OnlineStoreforElectronicComponents.Repositories;
+global using OnlineStoreforElectronicComponents.Constants;

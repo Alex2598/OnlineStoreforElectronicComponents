@@ -1,0 +1,46 @@
+﻿@model ComponentDTO
+@{
+    Layout = "_AdminLayout";
+}
+<div style="width:50%">
+    <h2> Add Component </h2>
+    <a asp-action="Index" asp-controller="Component" class="btn btn-primary">Back</a>
+    <form asp-action="AddComponent" enctype="multipart/form-data">
+        @* <input type="hidden" asp-for="Id" /> *@
+
+        <div class="my-2">
+            <label>Component*</label>
+            <input type="text" class="form-control" asp-for="ComponentName" />
+            <span asp-validation-for="ComponentName" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label>Package*</label>
+            <input type="text" class="form-control" asp-for="Package" />
+            <span asp-validation-for="Package" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label>TypeOfComponent*</label>
+            <select class="form-control" asp-for="TypeOfComponentId" asp-items="Model.TypeOfComponentList">
+                <option value="">Select TypeOfComponent</option>
+            </select>
+            <span asp-validation-for="TypeOfComponentId" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label>Price*</label>
+            <input type="number" class="form-control" asp-for="Price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="my-2">
+            <label>Image</label>
+            <input type="file" class="form-control" asp-for="ImageFile" />
+        </div>
+
+        <div class="my-2">
+            <button type="submit" class="btn btn-info">Add</button>
+        </div>
+    </form>
+</div>
