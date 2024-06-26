@@ -5,12 +5,12 @@
 <div class="my-2">
     <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
         <div class="col-12">
-            <label class="visually-hidden" for="typeOfComponentId">TypeOfComponents</label>
-            <select class="form-select" id="typeOfComponentId" name="typeOfComponentId">
-                <option selected>TypeOfComponent</option>
-                @foreach (var typeofcomponent in Model.TypeOfComponents)
+            <label class="visually-hidden" for="categoryId">Categories</label>
+            <select class="form-select" id="categoryId" name="categoryId">
+                <option selected>Category</option>
+                @foreach (var category in Model.Categories)
                 {
-                    <option selected="@(typeofcomponent.Id == Model.TypeOfComponentId)" value="@typeofcomponent.Id">@typeofcomponent.TypeOfComponentName</option>
+                    <option selected="@(category.Id == Model.CategoryId)" value="@category.Id">@category.CategoryName</option>
                 }
             </select>
         </div>
@@ -46,8 +46,8 @@
             <div class="card-body">
                 <h5 class="card-title">@component.ComponentName</h5>
                 <p class="card-text">
-                    <b>TypeOfComponent: </b>@component.TypeOfComponentName <br />
-                    <b>Package: </b>@component.Package <br />
+                    <b>Category: </b>@component.CategoryName <br />
+                    <b>Package: </b>@component.PackageName <br />
                     <b>Price: </b>@component.Price
                     @* <br/> <b>@component.Quantity</b> *@
                 </p>

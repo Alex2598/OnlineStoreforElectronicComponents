@@ -39,6 +39,6 @@ namespace OnlineStoreforElectronicComponents.Repositories
 
         public async Task<Component?> GetComponentById(int id) => await _context.Components.FindAsync(id);
 
-        public async Task<IEnumerable<Component>> GetComponents() => await _context.Components.Include(a=>a.TypeOfComponent).ToListAsync();
+        public async Task<IEnumerable<Component>> GetComponents() => await _context.Components.Include(a=>a.Category).ToListAsync();
     }
 }

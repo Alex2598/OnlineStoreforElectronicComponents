@@ -11,7 +11,7 @@ namespace OnlineStoreforElectronicComponents.Data
         {
         }
 
-        public DbSet<TypeOfComponent> TypeOfComponents { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Component> Components { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<CartDetail> CartDetails { get; set; }

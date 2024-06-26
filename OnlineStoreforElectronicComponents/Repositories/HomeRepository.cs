@@ -13,16 +13,16 @@ namespace OnlineStoreforElectronicComponents.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<TypeOfComponent>> TypeOfComponents()
+        public async Task<IEnumerable<Category>> Categories()
         {
-            return await _db.TypeOfComponents.ToListAsync();
+            return await _db.Categories.ToListAsync();
         }
-        public async Task<IEnumerable<Component>> GetComponents(string sTerm = "", int typeOfComponentId = 0)
+        public async Task<IEnumerable<Component>> GetComponents(string sTerm = "", int categoryId = 0)
         {
             sTerm = sTerm.ToLower();
             IEnumerable<Component> components = await (from component in _db.Components
-                         join typeofcomponent in _db.TypeOfComponents
-                         on component.TypeOfComponentId equals typeofcomponent.Id
+                         join category in _db.Categories
+                         on component.CategoryId equals category.Id
                          join stock in _db.Stocks
                          on component.Id equals stock.ComponentId
                          into component_stocks
@@ -32,18 +32,18 @@ namespace OnlineStoreforElectronicComponents.Repositories
                          {
                              Id = component.Id,
                              Image = component.Image,
-                             Package = component.Package,
+                             PackageName = component.PackageName,
                              ComponentName = component.ComponentName,
-                             TypeOfComponentId = component.TypeOfComponentId,
+                             CategoryId = component.CategoryId,
                              Price = component.Price,
-                             TypeOfComponentName = typeofcomponent.TypeOfComponentName,
+                             CategoryName = category.CategoryName,
                              Quantity=componentWithStock==null? 0:componentWithStock.Quantity
                          }
                          ).ToListAsync();
-            if (typeOfComponentId > 0)
+            if (categoryId > 0)
             {
 
-                components = components.Where(a => a.TypeOfComponentId == typeOfComponentId).ToList();
+                components = components.Where(a => a.CategoryId == categoryId).ToList();
             }
             return components;
 

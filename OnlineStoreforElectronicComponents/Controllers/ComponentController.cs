@@ -9,13 +9,13 @@ namespace OnlineStoreforElectronicComponents.Controllers;
 public class ComponentController : Controller
 {
     private readonly IComponentRepository _componentRepo;
-    private readonly ITypeOfComponentRepository _typeOfComponentRepo;
+    private readonly ICategoryRepository _categoryRepo;
     private readonly IFileService _fileService;
 
-    public ComponentController(IComponentRepository componentRepo, ITypeOfComponentRepository typeOfComponentRepo, IFileService fileService)
+    public ComponentController(IComponentRepository componentRepo, ICategoryRepository categoryRepo, IFileService fileService)
     {
         _componentRepo = componentRepo;
-        _typeOfComponentRepo = typeOfComponentRepo;
+        _categoryRepo = categoryRepo;
         _fileService = fileService;
     }
 
@@ -27,24 +27,24 @@ public class ComponentController : Controller
 
     public async Task<IActionResult> AddComponent()
     {
-        var typeOfComponentSelectList = (await _typeOfComponentRepo.GetTypeOfComponents()).Select(typeofcomponent => new SelectListItem
+        var categorySelectList = (await _categoryRepo.GetCategories()).Select(category => new SelectListItem
         {
-            Text = typeofcomponent.TypeOfComponentName,
-            Value = typeofcomponent.Id.ToString(),
+            Text = category.CategoryName,
+            Value = category.Id.ToString(),
         });
-        ComponentDTO componentToAdd = new() { TypeOfComponentList = typeOfComponentSelectList };
+        ComponentDTO componentToAdd = new() { CategoryList = categorySelectList };
         return View(componentToAdd);
     }
 
     [HttpPost]
     public async Task<IActionResult> AddComponent(ComponentDTO componentToAdd)
     {
-        var typeOfComponentSelectList = (await _typeOfComponentRepo.GetTypeOfComponents()).Select(typeofcomponent => new SelectListItem
+        var categorySelectList = (await _categoryRepo.GetCategories()).Select(category => new SelectListItem
         {
-            Text = typeofcomponent.TypeOfComponentName,
-            Value = typeofcomponent.Id.ToString(),
+            Text = category.CategoryName,
+            Value = category.Id.ToString(),
         });
-        componentToAdd.TypeOfComponentList = typeOfComponentSelectList;
+        componentToAdd.CategoryList = categorySelectList;
 
         if (!ModelState.IsValid)
             return View(componentToAdd);
@@ -61,14 +61,14 @@ public class ComponentController : Controller
                 string imageName=await _fileService.SaveFile(componentToAdd.ImageFile, allowedExtensions);
                 componentToAdd.Image = imageName;
             }
-            // manual mapping of ComponentDTO -> Component
+            // manual mapping of BookDTO -> Component
             Component component = new()
             {
                 Id = componentToAdd.Id,
                 ComponentName = componentToAdd.ComponentName,
-                Package = componentToAdd.Package,
+                PackageName = componentToAdd.PackageName,
                 Image = componentToAdd.Image,
-                TypeOfComponentId = componentToAdd.TypeOfComponentId,
+                CategoryId = componentToAdd.CategoryId,
                 Price = componentToAdd.Price
             };
             await _componentRepo.AddComponent(component);
@@ -100,18 +100,18 @@ public class ComponentController : Controller
             TempData["errorMessage"] = $"Component with the id: {id} does not found";
             return RedirectToAction(nameof(Index));
         }
-        var typeOfComponentSelectList = (await _typeOfComponentRepo.GetTypeOfComponents()).Select(typeofcomponent => new SelectListItem
+        var categorySelectList = (await _categoryRepo.GetCategories()).Select(category => new SelectListItem
         {
-            Text = typeofcomponent.TypeOfComponentName,
-            Value = typeofcomponent.Id.ToString(),
-            Selected=typeofcomponent.Id==component.TypeOfComponentId
+            Text = category.CategoryName,
+            Value = category.Id.ToString(),
+            Selected=category.Id==component.CategoryId
         });
         ComponentDTO componentToUpdate = new() 
         { 
-            TypeOfComponentList = typeOfComponentSelectList,
+            CategoryList = categorySelectList,
             ComponentName=component.ComponentName,
-            Package=component.Package,
-            TypeOfComponentId=component.TypeOfComponentId,
+            PackageName=component.PackageName,
+            CategoryId=component.CategoryId,
             Price=component.Price,
             Image=component.Image 
         };
@@ -121,13 +121,13 @@ public class ComponentController : Controller
     [HttpPost]
     public async Task<IActionResult> UpdateComponent(ComponentDTO componentToUpdate)
     {
-        var typeOfComponentSelectList = (await _typeOfComponentRepo.GetTypeOfComponents()).Select(typeofcomponent => new SelectListItem
+        var categorySelectList = (await _categoryRepo.GetCategories()).Select(category => new SelectListItem
         {
-            Text = typeofcomponent.TypeOfComponentName,
-            Value = typeofcomponent.Id.ToString(),
-            Selected=typeofcomponent.Id==componentToUpdate.TypeOfComponentId
+            Text = category.CategoryName,
+            Value = category.Id.ToString(),
+            Selected=category.Id==componentToUpdate.CategoryId
         });
-        componentToUpdate.TypeOfComponentList = typeOfComponentSelectList;
+        componentToUpdate.CategoryList = categorySelectList;
 
         if (!ModelState.IsValid)
             return View(componentToUpdate);
@@ -147,13 +147,13 @@ public class ComponentController : Controller
                 oldImage = componentToUpdate.Image;
                 componentToUpdate.Image = imageName;
             }
-            // manual mapping of ComponentDTO -> Component
+            // manual mapping of BookDTO -> Component
             Component component = new()
             {
                 Id=componentToUpdate.Id,
                 ComponentName = componentToUpdate.ComponentName,
-                Package = componentToUpdate.Package,
-                TypeOfComponentId = componentToUpdate.TypeOfComponentId,
+                PackageName = componentToUpdate.PackageName,
+                CategoryId = componentToUpdate.CategoryId,
                 Price = componentToUpdate.Price,
                 Image = componentToUpdate.Image
             };

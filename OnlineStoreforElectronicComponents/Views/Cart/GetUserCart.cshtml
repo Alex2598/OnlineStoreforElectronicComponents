@@ -12,8 +12,8 @@
             <tr>
                 <th>Component</th>
                 <th>Image</th>
-                <th>TypeOfComponent</th>
-                <th>RUB</th>
+                <th>Category</th>
+                <th>Unit Price(INR)</th>
                 <th>Total Price</th>
                 <th>Action</th>
             </tr>
@@ -31,7 +31,7 @@
                             <img src="/images/@item.Component.Image" style="width:80px;height:100px" />
                         }
                     </td>
-                    <td>@item.Component.TypeOfComponent.TypeOfComponentName</td>
+                    <td>@item.Component.Category.CategoryName</td>
                     <td>@item.Component.Price X @item.Quantity</td>
                     <td>@(item.Component.Price * item.Quantity)</td>
                     <td>
@@ -52,7 +52,7 @@
         </table>
 
         <div class="my-2">
-            <h5>Total(RUB): </h5>
+            <h5>Total(INR): </h5>
             @(Model.CartDetails.Select(item => item.Component.Price * item.Quantity).Sum())
         </div>
 

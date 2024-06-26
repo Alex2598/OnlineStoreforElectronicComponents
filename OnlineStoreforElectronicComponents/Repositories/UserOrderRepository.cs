@@ -57,7 +57,7 @@ namespace OnlineStoreforElectronicComponents.Repositories
                            .Include(x => x.OrderStatus)
                            .Include(x => x.OrderDetail)
                            .ThenInclude(x => x.Component)
-                           .ThenInclude(x => x.TypeOfComponent).AsQueryable();
+                           .ThenInclude(x => x.Category).AsQueryable();
             if (!getAll)
             {
                 var userId = GetUserId();

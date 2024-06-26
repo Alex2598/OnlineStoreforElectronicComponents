@@ -16,16 +16,16 @@ namespace OnlineStoreforElectronicComponents.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index(string sterm="",int typeOfComponentId=0)
+        public async Task<IActionResult> Index(string sterm="",int categoryId=0)
         {
-            IEnumerable<Component> components = await _homeRepository.GetComponents(sterm, typeOfComponentId);
-            IEnumerable<TypeOfComponent> genres = await _homeRepository.TypeOfComponents();
+            IEnumerable<Component> components = await _homeRepository.GetComponents(sterm, categoryId);
+            IEnumerable<Category> categories = await _homeRepository.Categories();
             ComponentDisplayModel componentModel = new ComponentDisplayModel
             {
               Components=components,
-              TypeOfComponents=genres,
+              Categories=categories,
               STerm=sterm,
-              TypeOfComponentId=typeOfComponentId
+              CategoryId=categoryId
             };
             return View(componentModel);
         }

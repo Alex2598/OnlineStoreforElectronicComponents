@@ -14,19 +14,19 @@ namespace OnlineStoreforElectronicComponents.Models
 
         [Required]
         [MaxLength(40)]
-        public string? Package { get; set; }
+        public string? PackageName { get; set; }
         [Required]
         public double Price { get; set; }
         public string? Image { get; set; }
         [Required]
-        public int TypeOfComponentId { get; set; }
-        public TypeOfComponent TypeOfComponent { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
         public List<CartDetail> CartDetail { get; set; }
         public Stock Stock { get; set; }
 
         [NotMapped]
-        public string TypeOfComponentName { get; set; }
+        public string CategoryName { get; set; }
         [NotMapped]
         public int Quantity { get; set; }
 

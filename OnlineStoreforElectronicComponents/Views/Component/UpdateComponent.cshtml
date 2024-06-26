@@ -17,16 +17,16 @@
 
         <div class="my-2">
             <label>Package*</label>
-            <input type="text" class="form-control" asp-for="Package" />
-            <span asp-validation-for="Package" class="text-danger"></span>
+            <input type="text" class="form-control" asp-for="PackageName" />
+            <span asp-validation-for="PackageName" class="text-danger"></span>
         </div>
 
         <div class="my-2">
-            <label>TypeOfComponent*</label>
-            <select class="form-control" asp-for="TypeOfComponentId" asp-items="Model.TypeOfComponentList">
-                <option value="">Select TypeOfComponent</option>
+            <label>Category*</label>
+            <select class="form-control" asp-for="CategoryId" asp-items="Model.CategoryList">
+                <option value="">Select Category</option>
             </select>
-            <span asp-validation-for="TypeOfComponentId" class="text-danger"></span>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
 
         <div class="my-2">

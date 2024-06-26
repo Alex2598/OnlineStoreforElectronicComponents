@@ -35,8 +35,8 @@
                                 <tr>
                                     <th>Component</th>
                                     <th>Image</th>
-                                    <th>TypeOfComponent</th>
-                                    <th>RUB</th>
+                                    <th>Category</th>
+                                    <th>Unit Price(INR)</th>
                                     <th>Total Price</th>
                                 </tr>
                                 @foreach (var item in order.OrderDetail)
@@ -53,7 +53,7 @@
                                                 <img src="/images/@item.Component.Image" style="width:80px;height:100px" />
                                             }
                                         </td>
-                                        <td>@item.Component.TypeOfComponent.TypeOfComponentName</td>
+                                        <td>@item.Component.Category.CategoryName</td>
                                         <td>@item.Component.Price X @item.Quantity</td>
                                         <td> @(item.Component.Price * item.Quantity) </td>
                                     </tr>

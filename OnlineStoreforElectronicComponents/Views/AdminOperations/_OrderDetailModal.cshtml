@@ -11,7 +11,7 @@
                 <table class="table table-striped">
                     <tr>
                         <th>Component</th>
-                        <th>TypeOfComponent</th>
+                        <th>Category</th>
                         <th>Price</th>
                         <th>Quantiy</th>
                         <th>TotalPrice</th>
@@ -20,7 +20,7 @@
                     {
                         <tr>
                             <td>@item.Component.ComponentName</td>
-                            <td>@item.Component.TypeOfComponent.TypeOfComponentName</td>
+                            <td>@item.Component.Category.CategoryName</td>
                             <td>@item.UnitPrice</td>
                             <td>@item.Quantity</td>
                             <td>@(item.Quantity * item.UnitPrice)</td>

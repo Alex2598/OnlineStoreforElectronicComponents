@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineStoreforElectronicComponents.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,19 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderStatus",
                 columns: table => new
                 {
@@ -76,19 +89,6 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCart", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TypeOfComponent",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TypeOfComponentName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TypeOfComponent", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +198,29 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Component",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ComponentName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    PackageName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Component", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Component_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -221,29 +244,6 @@ namespace OnlineStoreforElectronicComponents.Migrations
                         name: "FK_Order_OrderStatus_OrderStatusId",
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatus",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Component",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ComponentName = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Package = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeOfComponentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Component", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Component_TypeOfComponent_TypeOfComponentId",
-                        column: x => x.TypeOfComponentId,
-                        principalTable: "TypeOfComponent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -277,6 +277,26 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ComponentId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stock_Component_ComponentId",
+                        column: x => x.ComponentId,
+                        principalTable: "Component",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetail",
                 columns: table => new
                 {
@@ -300,26 +320,6 @@ namespace OnlineStoreforElectronicComponents.Migrations
                         name: "FK_OrderDetail_Order_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Order",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stock",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ComponentId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stock", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Stock_Component_ComponentId",
-                        column: x => x.ComponentId,
-                        principalTable: "Component",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -374,9 +374,9 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 column: "ShoppingCartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Component_TypeOfComponentId",
+                name: "IX_Component_CategoryId",
                 table: "Component",
-                column: "TypeOfComponentId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_OrderStatusId",
@@ -446,7 +446,7 @@ namespace OnlineStoreforElectronicComponents.Migrations
                 name: "OrderStatus");
 
             migrationBuilder.DropTable(
-                name: "TypeOfComponent");
+                name: "Category");
         }
     }
 }

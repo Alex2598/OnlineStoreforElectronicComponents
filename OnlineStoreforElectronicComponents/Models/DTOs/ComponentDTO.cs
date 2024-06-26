@@ -12,12 +12,12 @@ public class ComponentDTO
 
     [Required]
     [MaxLength(40)]
-    public string? Package { get; set; }
+    public string? PackageName { get; set; }
     [Required]
     public double Price { get; set; }
     public string? Image { get; set; }
     [Required]
-    public int TypeOfComponentId { get; set; }
+    public int CategoryId { get; set; }
     public IFormFile? ImageFile { get; set; }
-    public IEnumerable<SelectListItem>? TypeOfComponentList { get; set; }
+    public IEnumerable<SelectListItem>? CategoryList { get; set; }
 }

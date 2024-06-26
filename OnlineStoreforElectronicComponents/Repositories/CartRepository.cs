@@ -105,7 +105,7 @@ namespace OnlineStoreforElectronicComponents.Repositories
                                   .ThenInclude(a => a.Stock)
                                   .Include(a => a.CartDetails)
                                   .ThenInclude(a => a.Component)
-                                  .ThenInclude(a => a.TypeOfComponent)
+                                  .ThenInclude(a => a.Category)
                                   .Where(a => a.UserId == userId).FirstOrDefaultAsync();
             return shoppingCart;
 
