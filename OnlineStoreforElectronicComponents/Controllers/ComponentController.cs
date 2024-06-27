@@ -61,7 +61,7 @@ public class ComponentController : Controller
                 string imageName=await _fileService.SaveFile(componentToAdd.ImageFile, allowedExtensions);
                 componentToAdd.Image = imageName;
             }
-            // manual mapping of BookDTO -> Component
+            
             Component component = new()
             {
                 Id = componentToAdd.Id,
@@ -143,11 +143,11 @@ public class ComponentController : Controller
                 }
                 string[] allowedExtensions = [".jpeg", ".jpg", ".png"];
                 string imageName = await _fileService.SaveFile(componentToUpdate.ImageFile, allowedExtensions);
-                // hold the old image name. Because we will delete this image after updating the new
+               
                 oldImage = componentToUpdate.Image;
                 componentToUpdate.Image = imageName;
             }
-            // manual mapping of BookDTO -> Component
+           
             Component component = new()
             {
                 Id=componentToUpdate.Id,
@@ -158,7 +158,7 @@ public class ComponentController : Controller
                 Image = componentToUpdate.Image
             };
             await _componentRepo.UpdateComponent(component);
-            // if image is updated, then delete it from the folder too
+            
             if(!string.IsNullOrWhiteSpace(oldImage))
             {
                 _fileService.DeleteFile(oldImage);
