@@ -12,8 +12,8 @@ using OnlineStoreforElectronicComponents.Data;
 namespace OnlineStoreforElectronicComponents.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240627054717_init")]
-    partial class init
+    [Migration("20240629143617_iasfdasdf")]
+    partial class iasfdasdf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

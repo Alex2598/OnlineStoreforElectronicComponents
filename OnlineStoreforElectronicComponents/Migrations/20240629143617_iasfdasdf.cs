@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineStoreforElectronicComponents.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class iasfdasdf : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
