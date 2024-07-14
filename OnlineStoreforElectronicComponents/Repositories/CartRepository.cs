@@ -205,7 +205,14 @@ namespace OnlineStoreforElectronicComponents.Repositories
                 return false;
             }
         }
-
+        public async Task<Order> GetOrderForUser(string userId)
+{
+    return await _db.Orders
+                   .Include(x => x.OrderDetail)
+                   .ThenInclude(x => x.Component)
+                   .ThenInclude(x => x.Category)
+                   .FirstOrDefaultAsync(o => o.UserId == userId);
+}
         private string GetUserId()
         {
             var principal = _httpContextAccessor.HttpContext.User;

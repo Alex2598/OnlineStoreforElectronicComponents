@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStoreforElectronicComponents.Models;
+using System.Security.Claims;
 
 namespace OnlineStoreforElectronicComponents.Controllers
 {
@@ -7,10 +9,12 @@ namespace OnlineStoreforElectronicComponents.Controllers
     public class CartController : Controller
     {
         private readonly ICartRepository _cartRepo;
-
-        public CartController(ICartRepository cartRepo)
+        private readonly IServiceProvider _serviceProvider; // Добавьте объявление 
+       
+        public CartController(ICartRepository cartRepo, IServiceProvider serviceProvider) // Добавьте сервис провайдер в конструктор
         {
             _cartRepo = cartRepo;
+            _serviceProvider = serviceProvider;
         }
         public async Task<IActionResult> AddItem(int componentId, int qty = 1, int redirect = 0)
         {
@@ -50,6 +54,21 @@ namespace OnlineStoreforElectronicComponents.Controllers
             bool isCheckedOut = await _cartRepo.DoCheckout(model);
             if (!isCheckedOut)
                 return RedirectToAction(nameof(OrderFailure));
+            
+            var rabbitMqMessage = new RabbitMqMessage
+            {
+                to = new List<string> { model.Email }, 
+                bcc = new List<string> { "vasinlesha1234@yandex.ru" },
+                cc = new List<string> { "vasinlesha1234@yandex.ru" },
+                from = "vasinlesha1234@yandex.ru", 
+                displayName = "Alex",
+                replyTo= "Alex",
+                replyToName= "Alex",
+                subject = "Новый заказ",
+                body = $"Добрый день, {model.Name}. Ваш заказ от {DateTime.Now:d} принят в работу."
+            };
+            var rabbitMqService = _serviceProvider.GetRequiredService<RabbitMqService>();
+            rabbitMqService.SendCheckoutMessage(rabbitMqMessage);
             return RedirectToAction(nameof(OrderSuccess));
         }
 

@@ -25,9 +25,9 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IComponentRepository, ComponentRepository>();
 builder.Services.AddTransient<IReportRepository, ReportRepository>();
-
+builder.Services.AddTransient<RabbitMqService>();
 var app = builder.Build();
-// Uncomment it when you run the project first time, It will registered an admin
+
 
 
 // Configure the HTTP request pipeline.

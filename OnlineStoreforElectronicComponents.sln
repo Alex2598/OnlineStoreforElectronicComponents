@@ -4,6 +4,8 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStoreforElectronicComponents", "OnlineStoreforElectronicComponents\OnlineStoreforElectronicComponents.csproj", "{13A883D5-D200-42F4-AA85-A17CE35E51F7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mailService", "mailService\mailService\mailService.csproj", "{EAF87E97-B0E3-4F95-9284-933C13000995}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{13A883D5-D200-42F4-AA85-A17CE35E51F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13A883D5-D200-42F4-AA85-A17CE35E51F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13A883D5-D200-42F4-AA85-A17CE35E51F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF87E97-B0E3-4F95-9284-933C13000995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF87E97-B0E3-4F95-9284-933C13000995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF87E97-B0E3-4F95-9284-933C13000995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF87E97-B0E3-4F95-9284-933C13000995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
